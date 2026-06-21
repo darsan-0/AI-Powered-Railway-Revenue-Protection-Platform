@@ -112,6 +112,46 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/")
+def root_route():
+    return {
+        "project": "AI-Powered Railway Revenue Protection Platform",
+        "version": os.getenv("AGENT_VERSION", "1.0.0"),
+        "status": "online",
+        "environment": os.getenv("ENV", "production"),
+        "docs": "/docs",
+        "available_endpoints": {
+            "GET /": "API metadata and agent architecture summary",
+            "GET /health": "Liveness and readiness health check probe",
+            "GET /api/health": "Detailed subsystem and cloud provider connectivity status",
+            "GET /api/passengers": "List and query ticket records from the passenger database",
+            "GET /api/passengers/{ticket_id}": "Retrieve specific ticket record details by ID",
+            "POST /api/validate": "Submit a ticket scan for verification & run multi-agent checks",
+            "GET /api/alerts": "Retrieve active and resolved fraud alert entries",
+            "POST /api/alerts/resolve/{alert_id}": "Mark a detected fraud alert as resolved",
+            "GET /api/analytics": "Fetch revenue protection statistics and dashboard visualization data",
+            "GET /api/history": "Retrieve historical ticket scanning validation logs",
+            "POST /api/reset": "Reset database to initial seeded demonstration records",
+            "GET /api/export": "Export current scanning logs in CSV format",
+            "POST /api/auth/login": "User authentication endpoint for chief security/revenue staff",
+            "POST /feedback": "Ingest user satisfaction feedback and rating surveys"
+        },
+        "agents": [
+            "Coordinator Agent",
+            "Verification Agent",
+            "Fraud Detection Agent",
+            "Revenue Analytics Agent",
+            "Crowd Intelligence Agent",
+            "Enforcement Recommendation Agent"
+        ],
+        "agent_architecture_summary": "A multi-agent coordination system that integrates deterministic database validations with LLM-powered context analysis. A Central Coordinator Agent orchestrates rule verification and gathers logs from specialized sub-agents covering Verification, Fraud Detection, Revenue Analytics, Crowd Intelligence, and Enforcement Recommendation to prevent fare leakage and optimize passenger flow."
+    }
+
+@app.get("/health")
+def root_health_check():
+    return {"status": "healthy"}
+
+
 @app.get("/api/health")
 def health_check():
     return {"status": "healthy", "project_id": project_id}
@@ -335,6 +375,11 @@ def collect_feedback(feedback: Feedback) -> dict[str, str]:
     logger_wrapper.log_struct(feedback.model_dump(), severity="INFO")
     return {"status": "success"}
 
+# Override ADK's default /health endpoint to ensure it returns {"status": "healthy"} instead of {"status": "ok"}
+app.routes[:] = [r for r in app.routes if not (r.path == "/health" and r.name == "health")]
+
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
