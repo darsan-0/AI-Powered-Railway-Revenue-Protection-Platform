@@ -39,7 +39,7 @@ export default function HistoryPage() {
       setAlerts(alertData);
       setStationStats(analyticsData.stations || []);
     } catch (err: any) {
-      setError(err.message || 'Could not connect to the railway service.');
+      setError(err.message || 'Connection to database service failed. The backend service may be cold-starting (Render free tier spin-up can take up to 1 minute) or is currently offline.');
     } finally {
       setIsLoading(false);
     }

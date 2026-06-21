@@ -304,7 +304,7 @@ export default function ScannerPage() {
       }, 250);
 
     } catch (err: any) {
-      setError(err.message || 'Connection to backend failed. Make sure FastAPI server is running on port 8000.');
+      setError(err.message || 'Connection to verification service failed. The backend service may be cold-starting (Render free tier spin-up can take up to 1 minute) or is currently offline. Please wait a moment and try again.');
       setIsLoading(false);
       setActiveAgent(null);
     }

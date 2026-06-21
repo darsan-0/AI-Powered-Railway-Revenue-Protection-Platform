@@ -76,7 +76,9 @@ export default function AdminPage({ isAdminLoggedIn, setIsAdminLoggedIn, adminUs
       setAdminUser(data.user);
       localStorage.setItem('railway_admin_token', data.token);
     } catch (err: any) {
-      setLoginError(err.message || 'Invalid credentials');
+      setLoginError(err.message === 'Failed to fetch' 
+        ? 'Connection to auth service failed. The backend service may be cold-starting (Render free tier spin-up can take up to 1 minute). Please wait and try again.'
+        : (err.message || 'Invalid credentials'));
     } finally {
       setIsLoggingIn(false);
     }

@@ -49,7 +49,7 @@ export default function AnalyticsPage() {
       <div className="flex-1 flex flex-col items-center justify-center pt-24 px-4 text-center">
         <AlertCircle className="w-16 h-16 text-rose-500 mb-4 animate-bounce" />
         <h2 className="font-display font-bold text-xl text-white mb-2">Failed to Sync Analytics</h2>
-        <p className="text-sm text-gray-400 max-w-md mb-6">{error || 'Please check that the FastAPI server is running on port 8000.'}</p>
+        <p className="text-sm text-gray-400 max-w-md mb-6">{error || 'Connection to operations service failed. The backend service may be cold-starting (Render free tier spin-up can take up to 1 minute) or is currently offline.'}</p>
         <button 
           onClick={fetchAnalytics}
           className="px-6 py-2 rounded-xl bg-gradient-to-r from-railway-indigo to-railway-blue text-white font-semibold text-sm hover:opacity-90 active:scale-95 transition-all"

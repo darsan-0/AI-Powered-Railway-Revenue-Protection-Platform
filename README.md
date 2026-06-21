@@ -109,6 +109,41 @@ npm run dev
 
 ---
 
+## 🌐 Production Deployment
+
+The application is structured to be deployed separately for maximum scalability (FastAPI backend on **Render**, React frontend on **Vercel**).
+
+### 1. Backend Deployment (Render)
+1. **Create Web Service**: Log in to Render, click **New +**, and select **Web Service**.
+2. **Repository**: Connect your GitHub repository.
+3. **Configuration Settings**:
+   * **Name**: `ai-powered-railway-revenue-protection`
+   * **Region**: Choose the closest region (e.g., Singapore or US East).
+   * **Branch**: `main`
+   * **Root Directory**: `app` (This is critical because the backend files and `Dockerfile` are inside the `/app` subdirectory).
+   * **Runtime**: `Docker`
+4. **Environment Variables**: Add any required environment variables.
+5. **Deploy**: Render will automatically build the container from the `Dockerfile` and deploy the service. It will be available at:
+   `https://ai-powered-railway-revenue-protection.onrender.com`
+
+> [!NOTE]
+> Since this project uses Render's free tier, the backend web service will spin down automatically after 15 minutes of inactivity. The first API call after a spin-down will trigger a cold-start, taking approximately 50-60 seconds to boot up. The frontend includes graceful error handling notifying users of this.
+
+---
+
+### 2. Frontend Deployment (Vercel)
+1. **Import Project**: In the Vercel dashboard, click **Add New** > **Project** and import your GitHub repository.
+2. **Project Settings**:
+   * **Framework Preset**: `Vite` (automatically detected).
+   * **Root Directory**: Select `app/frontend` (since the React project is nested in the monorepo).
+3. **Build & Development Settings**: Keep defaults (`npm run build` and `dist` output directory).
+4. **Environment Variables**: Add a new environment variable:
+   * **Key**: `VITE_API_URL`
+   * **Value**: `https://ai-powered-railway-revenue-protection.onrender.com` (your deployed Render service URL).
+5. **Deploy**: Click **Deploy**. Vercel will build the React SPA and host it on their global CDN.
+
+---
+
 ## 🎯 Demonstration Workflow
 
 1. Open [http://localhost:5173](http://localhost:5173) to view the homepage and review the agent system design.
