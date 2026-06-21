@@ -1,0 +1,17 @@
+{
+  "name": "ai-powered-railway-revenue-protection-platform",
+  "version": "1.0.0",
+  "description": "Multi-Agent Railway Revenue Protection Platform",
+  "scripts": {
+    "install:frontend": "npm install --prefix app/frontend",
+    "install:backend": "cd app && uv sync",
+    "install-all": "npm run install:frontend && npm run install:backend",
+    "dev:frontend": "npm run dev --prefix app/frontend",
+    "dev:backend": "cd app && uv run uvicorn app.fast_api_app:app --reload --port 8000",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "build:frontend": "npm run build --prefix app/frontend"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

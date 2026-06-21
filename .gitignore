@@ -1,0 +1,38 @@
+# Dependency directories
+node_modules/
+**/node_modules/
+
+# Python virtual envs and caches
+.venv/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.adk/
+
+# Frontend build outputs
+dist/
+**/dist/
+dist-ssr/
+
+# Environment configurations and secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+!*.env.example
+*.tfvars
+.saved_chats/
+
+# Databases
+*.db
+*.db-journal
+
+# IDEs and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
